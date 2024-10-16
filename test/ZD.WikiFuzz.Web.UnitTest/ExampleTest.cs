@@ -13,11 +13,11 @@ public class ExampleTest
     [Fact]
     public void Example()
     {
-        const int x = 4;
-        const int y = 8;
+        const int a = 4;
+        const int b = 8;
 
-        const int z = x * y;
+        const int c = a * b;
 
-        z.Should().Be(32);
+        c.Should().Be(32);
     }
 }
