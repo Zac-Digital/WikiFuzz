@@ -27,10 +27,11 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ vars.DOTNET_VERSION }}
+          cache: 'true'
 
       - name: Restore Nuget Packages
         shell: bash
-        run: dotnet restore
+        run: dotnet restore --locked-mode
 
       - name: Build Project
         shell: bash

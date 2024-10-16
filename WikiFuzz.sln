@@ -1,5 +1,4 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E2ED7FF2-0B22-32CD-6AEE-3E86DDFD4EBD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZD.WikiFuzz.Web", "src\ZD.WikiFuzz.Web\ZD.WikiFuzz.Web.csproj", "{01052E7D-12C2-DC4E-8D73-C78CB45FCE98}"
