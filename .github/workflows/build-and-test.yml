@@ -1,13 +1,21 @@
 name: Build & Test Project
 
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
+
 on:
   pull_request:
     paths:
       - 'src/**'
       - '.github/workflows/build-and-test.yml'
+  push:
+    branches:
+      - 'main'
 
 jobs:
   build_and_test:
+    name: Build & Test
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Repository
