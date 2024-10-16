@@ -1,0 +1,33 @@
+name: Build & Test Project
+
+on:
+  pull_request:
+    paths:
+      - 'src/**'
+      - '.github/workflows/build-and-test.yml'
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Set up .NET ${{ vars.DOTNET_VERSION }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ vars.DOTNET_VERSION }}
+
+      - name: Restore Nuget Packages
+        shell: bash
+        run: dotnet restore
+
+      - name: Build Project
+        shell: bash
+        run: dotnet build --no-restore
+
+      - name: Test Project
+        shell: bash
+        run: dotnet test --no-build --no-restore --verbosity minimal
