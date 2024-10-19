@@ -13,30 +13,14 @@ jobs:
         with:
           ref: ${{ github.ref }}
 
-      - name: Set up .NET ${{ vars.DOTNET_VERSION }}
-        uses: actions/setup-dotnet@v4
+      - name: Setup Dotnet
+        uses: ./.github/actions/setup-dotnet
         with:
           dotnet-version: ${{ vars.DOTNET_VERSION }}
 
       - name: Install Stryker Mutator
         shell: bash
         run: dotnet tool install dotnet-stryker --global
-
-      - name: Nuget Package Cache
-        uses: actions/cache@v4
-        with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-
-
-      - name: Restore Nuget Packages
-        shell: bash
-        run: dotnet restore
-
-      - name: Build Project
-        shell: bash
-        run: dotnet build --no-restore
 
       - name: Run Stryker Mutator
         shell: bash
