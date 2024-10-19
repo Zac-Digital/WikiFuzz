@@ -29,10 +29,12 @@ jobs:
 
   build-and-test:
     needs: [ lint-code ]
+    if: always() && (needs.lint-code.result == 'success' || needs.lint-code.result == 'skipped')
     name: Build & Test Code
     uses: ./.github/workflows/build-and-test.yml
 
   stryker:
     needs: [ lint-code ]
+    if: always() && (needs.lint-code.result == 'success' || needs.lint-code.result == 'skipped')
     name: Stryker Mutator
     uses: ./.github/workflows/stryker.yml
