@@ -15,6 +15,8 @@ jobs:
 
       - name: Setup Dotnet
         uses: ./.github/actions/setup-dotnet
+        with:
+          dotnet-version: ${{ vars.DOTNET_VERSION }}
 
       - name: Test Project
         shell: bash

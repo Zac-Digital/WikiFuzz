@@ -1,6 +1,9 @@
 name: Setup DotNet
 
 inputs:
+  dotnet_version:
+    required: true
+    description: The DotNet Version
   build:
     required: false
     default: 'true'
@@ -9,10 +12,10 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Set up .NET ${{ vars.DOTNET_VERSION }}
+    - name: Set up .NET ${{ inputs.dotnet_version }}
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: ${{ vars.DOTNET_VERSION }}
+        dotnet-version: ${{ inputs.dotnet_version }}
 
     - name: Nuget Package Cache
       uses: actions/cache@v4
