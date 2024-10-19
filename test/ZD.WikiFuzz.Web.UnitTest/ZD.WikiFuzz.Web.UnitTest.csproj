@@ -27,4 +27,8 @@
         <Using Include="Xunit"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\ZD.WikiFuzz.Web\ZD.WikiFuzz.Web.csproj" />
+    </ItemGroup>
+
 </Project>

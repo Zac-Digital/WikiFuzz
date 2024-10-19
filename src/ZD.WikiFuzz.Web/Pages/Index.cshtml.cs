@@ -5,14 +5,15 @@ namespace ZD.WikiFuzz.Web.Pages;
 
 public class IndexModel : PageModel
 {
-    private readonly ILogger<IndexModel> _logger;
+    [BindProperty] public string? SearchText { get; set; }
 
-    public IndexModel(ILogger<IndexModel> logger)
+    public IActionResult OnGet()
     {
-        _logger = logger;
+        return Page();
     }
 
-    public void OnGet()
+    public IActionResult OnPost()
     {
+        return Page();
     }
 }
