@@ -1,18 +1,7 @@
 name: Stryker Mutator
 
-concurrency:
-  group: "${{ github.workflow }}-${{ github.ref }}"
-  cancel-in-progress: true
-
 on:
-  pull_request:
-    paths:
-      - 'src/**'
-      - 'test/**'
-      - '.github/workflows/stryker.yml'
-  push:
-    branches:
-      - 'main'
+  workflow_call:
 
 jobs:
   dotnet-stryker:
@@ -56,7 +45,7 @@ jobs:
       - name: Upload Report
         uses: actions/upload-artifact@v4
         with:
-          name: 'Report'
+          name: 'Stryker-Report'
           path: 'StrykerOutput/**/mutation-report.html'
           compression-level: '9'
           retention-days: 7

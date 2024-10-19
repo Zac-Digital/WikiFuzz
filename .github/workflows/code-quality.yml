@@ -1,0 +1,38 @@
+name: Code Quality
+
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
+
+on:
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'test/**'
+      - '.github/workflows/code-quality.yml'
+      - '.github/workflows/build-and-test.yml'
+      - '.github/workflows/linter.yml'
+      - '.github/workflows/stryker.yml'
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  lint-code:
+    if: ${{ github.event_name == 'pull_request' }}
+    name: Lint Code & Commit Changes
+    permissions:
+      contents: write
+      pull-requests: write
+      checks: write
+    uses: ./.github/workflows/linter.yml
+
+  build-and-test:
+    needs: [ lint-code ]
+    name: Build & Test Code
+    uses: ./.github/workflows/build-and-test.yml
+
+  stryker:
+    needs: [ lint-code ]
+    name: Stryker Mutator
+    uses: ./.github/workflows/stryker.yml

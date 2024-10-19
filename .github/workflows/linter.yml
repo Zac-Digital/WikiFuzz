@@ -1,0 +1,61 @@
+name: Lint Code
+
+on:
+  workflow_call:
+
+jobs:
+  lint-code:
+    name: Lint Code
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+      pull-requests: write
+      checks: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Set up .NET ${{ vars.DOTNET_VERSION }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ vars.DOTNET_VERSION }}
+
+      - name: Nuget Package Cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Restore Nuget Packages
+        shell: bash
+        run: dotnet restore
+
+      - name: Lint Code
+        shell: bash
+        run: dotnet format --no-restore --verbosity diagnostic
+
+      - name: Detect File Changes
+        id: changes
+        shell: bash
+        run: |
+          if [ $(git status -s -uno | wc -l) -gt 0 ]
+          then
+            echo "CHANGE=1" >> $GITHUB_OUTPUT
+          else
+            echo "CHANGE=0" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit Changes
+        if: ${{ steps.changes.outputs.CHANGE == 1 }}
+        shell: bash
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "chore: Linted Code for WikiFuzz.sln Solution"
+          git push
