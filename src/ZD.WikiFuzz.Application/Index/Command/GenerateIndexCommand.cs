@@ -33,16 +33,16 @@ public class GenerateIndexCommand : IGenerateIndexCommand
     {
         string? currentLine = fileReader.ReadLine();
 
-        while (currentLine is not null)
+        while (currentLine  is not null)
         {
             SetSeparatorIndices(currentLine);
             ArticleIndex articleIndex = CreateArticleIndex(ref currentLine);
 
-            articleIndexDictionary.TryAdd(GetArticleTitle(ref currentLine), articleIndex);
+            articleIndexDictionary.TryAdd(GetArticleTitle(ref currentLine),                  articleIndex);
 
             currentLine = fileReader.ReadLine();
         }
 
-        fileReader.Close();
+         fileReader.Close();
     }
 }
