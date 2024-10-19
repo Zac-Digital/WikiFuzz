@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\ZD.WikiFuzz.Domain\ZD.WikiFuzz.Domain.csproj" />
+    </ItemGroup>
+
 </Project>
