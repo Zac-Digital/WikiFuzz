@@ -19,6 +19,7 @@ on:
 
 jobs:
   lint-code:
+    if: ${{ github.event_name == 'pull_request' }}
     name: Lint Code & Commit Changes
     permissions:
       contents: write
