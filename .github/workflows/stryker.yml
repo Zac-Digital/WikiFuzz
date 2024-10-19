@@ -1,0 +1,60 @@
+name: Stryker Mutator
+
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
+
+on:
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'test/**'
+      - '.github/workflows/stryker.yml'
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  dotnet-stryker:
+    name: Stryker Mutator
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Set up .NET ${{ vars.DOTNET_VERSION }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ vars.DOTNET_VERSION }}
+
+      - name: Install Stryker Mutator
+        shell: bash
+        run: dotnet tool install dotnet-stryker --global
+
+      - name: Nuget Package Cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Restore Nuget Packages
+        shell: bash
+        run: dotnet restore
+
+      - name: Build Project
+        shell: bash
+        run: dotnet build --no-restore
+
+      - name: Run Stryker Mutator
+        shell: bash
+        run: dotnet stryker --reporter "progress" --reporter "cleartext" --reporter "html" --concurrency `nproc`
+
+      - name: Upload Report
+        uses: actions/upload-artifact@v4
+        with:
+          path: 'StrykerOutput/*/reports/mutation-report.html'
+          compression-level: '9'
