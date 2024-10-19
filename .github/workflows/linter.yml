@@ -5,14 +5,7 @@ concurrency:
   cancel-in-progress: true
 
 on:
-  pull_request:
-    paths:
-      - 'src/**'
-      - 'test/**'
-      - '.github/workflows/linter.yml'
-  push:
-    branches:
-      - 'main'
+  workflow_call:
 
 jobs:
   lint-code:
@@ -61,7 +54,7 @@ jobs:
             echo "CHANGE=0" >> $GITHUB_OUTPUT
           fi
 
-      - name: Commit Changes (WIP)
+      - name: Commit Changes
         if: ${{ steps.changes.outputs.CHANGE == 1 }}
         shell: bash
         run: |

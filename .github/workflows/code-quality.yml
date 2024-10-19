@@ -1,0 +1,29 @@
+name: Code Quality
+
+on:
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'test/**'
+      - '.github/workflows/code-quality.yml'
+      - '.github/workflows/build-and-test.yml'
+      - '.github/workflows/linter.yml'
+      - '.github/workflows/stryker.yml'
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  lint-code:
+    name: Lint Code & Commit Changes
+    uses: ./.github/workflows/linter.yml
+
+  build-and-test:
+    needs: [ lint-code ]
+    name: Build & Test Code
+    uses: ./.github/workflows/build-and-test.yml
+
+  stryker:
+    needs: [ lint-code ]
+    name: Stryker Mutator
+    uses: ./.github/workflows/stryker.yml
