@@ -1,16 +1,18 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ZD.WikiFuzz.Application.Index.Command;
+using ZD.WikiFuzz.Application.Index.Query;
 
 namespace ZD.WikiFuzz.Web.Pages;
 
 public class IndexModel : PageModel
 {
+    private readonly IGetArticleQuery _getArticleQuery;
+
     [BindProperty] public string? SearchText { get; set; }
 
-    public IndexModel(IGenerateIndexCommand generateIndexCommand)
+    public IndexModel(IGetArticleQuery getArticleQuery)
     {
-        Task.Run(generateIndexCommand.GenerateIndices);
+        _getArticleQuery = getArticleQuery;
     }
 
     public IActionResult OnGet()

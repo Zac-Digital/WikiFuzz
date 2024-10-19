@@ -1,4 +1,5 @@
-data/enwiki*
+*Data/
+!Data/README.md
 
 .vscode/*
 !.vscode/settings.json

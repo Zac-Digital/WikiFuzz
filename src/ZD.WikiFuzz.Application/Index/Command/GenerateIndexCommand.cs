@@ -1,8 +1,9 @@
+using System.Collections.Concurrent;
 using ZD.WikiFuzz.Domain.ArticleIndex;
 
 namespace ZD.WikiFuzz.Application.Index.Command;
 
-public class GenerateIndexCommand : IGenerateIndexCommand
+public sealed class GenerateIndexCommand
 {
     private readonly int[] _sepIndices = new int[2];
 
@@ -28,12 +29,9 @@ public class GenerateIndexCommand : IGenerateIndexCommand
         };
     }
 
-    public Dictionary<string, ArticleIndex> GenerateIndices()
+    public void Generate(ConcurrentDictionary<string, ArticleIndex> articleIndexDictionary)
     {
-        Dictionary<string, ArticleIndex> articleIndexDictionary = new();
-
-        StreamReader fileReader = new(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
-            "enwiki-20241001-pages-articles-multistream-index.txt"));
+        StreamReader fileReader = new(Path.Combine(Directory.GetCurrentDirectory(), "Data", "Wiki-Index.txt"));
 
         string? currentLine = fileReader.ReadLine();
 
@@ -48,7 +46,5 @@ public class GenerateIndexCommand : IGenerateIndexCommand
         }
 
         fileReader.Close();
-
-        return articleIndexDictionary;
     }
 }

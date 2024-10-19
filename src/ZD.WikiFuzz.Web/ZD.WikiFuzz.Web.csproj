@@ -10,10 +10,4 @@
       <ProjectReference Include="..\ZD.WikiFuzz.Application\ZD.WikiFuzz.Application.csproj" />
     </ItemGroup>
     
-    <ItemGroup>
-        <Content Include="..\..\data\enwiki-20241001-pages-articles-multistream-index.txt">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-    </ItemGroup>
-
 </Project>
