@@ -9,13 +9,7 @@ namespace ZD.WikiFuzz.Web.UnitTest;
 
 public class WhenUsingIndex
 {
-    private readonly IndexModel _indexModel;
-
-    public WhenUsingIndex()
-    {
-        IGetArticleQuery getArticleQuery = Substitute.For<IGetArticleQuery>();
-        _indexModel = new IndexModel(getArticleQuery);
-    }
+    private readonly IndexModel _indexModel = new(Substitute.For<IGetArticleQuery>());
 
     [Fact]
     public void Then_OnGet_Should_Return_OK()
