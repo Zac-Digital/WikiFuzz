@@ -18,7 +18,7 @@ public class GenerateIndexCommand : IGenerateIndexCommand
         }
     }
 
-    private string GetArticleTitle(ref string       currentLine) => new(currentLine.AsSpan()[(_sepIndices[1] + 1)..]);
+    private string GetArticleTitle(ref string currentLine) => new(currentLine.AsSpan()[(_sepIndices[1] + 1)..]);
 
     private ArticleIndex CreateArticleIndex(ref string currentLine)
     {
