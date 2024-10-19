@@ -56,5 +56,6 @@ jobs:
       - name: Upload Report
         uses: actions/upload-artifact@v4
         with:
-          path: 'StrykerOutput/*/reports/mutation-report.html'
+          path: 'StrykerOutput/**/mutation-report.html'
           compression-level: '9'
+          retention-days: 7
