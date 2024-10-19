@@ -8,6 +8,11 @@ jobs:
     name: Stryker Mutator
     runs-on: ubuntu-22.04
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
       - name: Setup Dotnet
         uses: ./.github/actions/setup-dotnet
 

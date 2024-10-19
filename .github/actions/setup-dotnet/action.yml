@@ -1,28 +1,14 @@
 name: Setup DotNet
 
 inputs:
-  ref:
-    required: false
-    default: ${{ github.ref }}
-    description: The GitHub Ref
   build:
     required: false
     default: 'true'
-    description: Build the project or skip
-  fetch_depth:
-    required: false
-    default: '1'
-    description: The Fetch Depth
+    description: Build the Project or Skip
 
 runs:
   using: composite
   steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: ${{ inputs.fetch_depth }}
-        ref: ${{ inputs.ref }}
-
     - name: Set up .NET ${{ vars.DOTNET_VERSION }}
       uses: actions/setup-dotnet@v4
       with:
