@@ -3,7 +3,7 @@ using ZD.WikiFuzz.Domain.ArticleIndex;
 
 namespace ZD.WikiFuzz.Application.Index.Command;
 
-public sealed class GenerateIndexCommand
+public class GenerateIndexCommand : IGenerateIndexCommand
 {
     private readonly int[] _sepIndices = new int[2];
 
@@ -29,10 +29,8 @@ public sealed class GenerateIndexCommand
         };
     }
 
-    public void Generate(ConcurrentDictionary<string, ArticleIndex> articleIndexDictionary)
+    public void Generate(StreamReader fileReader, ConcurrentDictionary<string, ArticleIndex> articleIndexDictionary)
     {
-        StreamReader fileReader = new(Path.Combine(Directory.GetCurrentDirectory(), "Data", "Wiki-Index.txt"));
-
         string? currentLine = fileReader.ReadLine();
 
         while (currentLine is not null)

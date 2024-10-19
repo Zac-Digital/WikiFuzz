@@ -7,7 +7,7 @@ using ZD.WikiFuzz.Web.Pages;
 
 namespace ZD.WikiFuzz.Web.UnitTest;
 
-public class WhenUsingIndex
+public class WhenUsingIndexModel
 {
     private readonly IndexModel _indexModel = new(Substitute.For<IGetArticleQuery>());
 

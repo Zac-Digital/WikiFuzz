@@ -8,9 +8,12 @@ public class GetArticleQuery : IGetArticleQuery
 {
     private readonly ConcurrentDictionary<string, ArticleIndex> _articleIndexDictionary;
 
-    public GetArticleQuery()
+    public GetArticleQuery(IGenerateIndexCommand generateIndexCommand)
     {
         _articleIndexDictionary = new ConcurrentDictionary<string, ArticleIndex>();
-        Task.Run(() => new GenerateIndexCommand().Generate(_articleIndexDictionary));
+        Task.Run(() =>
+            generateIndexCommand.Generate(
+                new StreamReader(Path.Combine(Directory.GetCurrentDirectory(), "Data", "Wiki-Index.txt")),
+                _articleIndexDictionary));
     }
 }
