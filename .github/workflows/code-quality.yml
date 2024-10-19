@@ -16,6 +16,10 @@ on:
 jobs:
   lint-code:
     name: Lint Code & Commit Changes
+    permissions:
+      contents: write
+      pull-requests: write
+      checks: write
     uses: ./.github/workflows/linter.yml
 
   build-and-test:
