@@ -8,7 +8,8 @@ public class IndexModel : PageModel
 {
     private readonly IGetArticleQuery _getArticleQuery;
 
-    [BindProperty] public string? SearchText { get; set; }
+    [BindProperty(SupportsGet = true)] public string? SearchText { get; set; }
+    public IEnumerable<string> SearchResults { get; set; } = [];
 
     public IndexModel(IGetArticleQuery getArticleQuery)
     {
@@ -17,6 +18,13 @@ public class IndexModel : PageModel
 
     public IActionResult OnGet()
     {
+        SearchResults = _getArticleQuery.GetArticleNames(SearchText);
+
+        if (Request.Headers.XRequestedWith.Equals("XMLHttpRequest"))
+        {
+            return new JsonResult(SearchResults);
+        }
+
         return Page();
     }
 

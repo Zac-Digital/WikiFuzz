@@ -30,6 +30,7 @@ public class GetArticleQuery : IGetArticleQuery
     {
         if (string.IsNullOrEmpty(partialArticleName)) return [];
         return partialArticleName.Length == 1 ? [] :
-            ArticleIndexDictionary.Keys.Where(key => key.StartsWith(partialArticleName)).Take(8);
+            ArticleIndexDictionary.Keys.Where(key => key.StartsWith(partialArticleName,
+                StringComparison.InvariantCultureIgnoreCase)).Take(8);
     }
 }
