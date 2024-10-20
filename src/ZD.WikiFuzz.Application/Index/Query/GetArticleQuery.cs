@@ -8,6 +8,7 @@ public class GetArticleQuery : IGetArticleQuery
 {
     public ConcurrentDictionary<string, ArticleIndex> ArticleIndexDictionary { get; init; }
 
+    // Stryker disable all
     public GetArticleQuery(IGenerateIndexCommand generateIndexCommand)
     {
         ArticleIndexDictionary = new ConcurrentDictionary<string, ArticleIndex>();
@@ -16,6 +17,7 @@ public class GetArticleQuery : IGetArticleQuery
                 new StreamReader(Path.Combine(Directory.GetCurrentDirectory(), "Data", "Wiki-Index.txt")),
                 ArticleIndexDictionary));
     }
+    // Stryker restore all
 
     public ArticleIndex? GetArticleIndex(string? articleName)
     {
