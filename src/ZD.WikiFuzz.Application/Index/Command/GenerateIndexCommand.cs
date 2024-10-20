@@ -18,14 +18,13 @@ public class GenerateIndexCommand : IGenerateIndexCommand
         }
     }
 
-    private string GetArticleTitle(ref string currentLine) => new(currentLine.AsSpan()[(_sepIndices[1] + 1)..]);
-
-    private ArticleIndex CreateArticleIndex(ref string currentLine)
+    private ArticleIndex CreateArticleIndex(string currentLine)
     {
         return new ArticleIndex
         {
             BytesToSeek = long.Parse(currentLine.AsSpan()[.._sepIndices[0]]),
-            ArticleId = long.Parse(currentLine.AsSpan().Slice(_sepIndices[0] + 1, _sepIndices[1] - _sepIndices[0] - 1))
+            ArticleId = long.Parse(currentLine.AsSpan().Slice(_sepIndices[0] + 1, _sepIndices[1] - _sepIndices[0] - 1)),
+            ArticleName = new string(currentLine.AsSpan()[(_sepIndices[1] + 1)..])
         };
     }
 
@@ -36,9 +35,9 @@ public class GenerateIndexCommand : IGenerateIndexCommand
         while (currentLine is not null)
         {
             SetSeparatorIndices(currentLine);
-            ArticleIndex articleIndex = CreateArticleIndex(ref currentLine);
+            ArticleIndex articleIndex = CreateArticleIndex(currentLine);
 
-            articleIndexDictionary.TryAdd(GetArticleTitle(ref currentLine), articleIndex);
+            articleIndexDictionary.TryAdd(articleIndex.ArticleName, articleIndex);
 
             currentLine = fileReader.ReadLine();
         }

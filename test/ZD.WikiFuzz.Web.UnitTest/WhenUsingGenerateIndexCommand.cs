@@ -37,32 +37,38 @@ public class WhenUsingGenerateIndexCommand
         _expectedArticleIndexDictionary.TryAdd("ArticleOne", new ArticleIndex
         {
             BytesToSeek = 0,
-            ArticleId = 0
+            ArticleId = 0,
+            ArticleName = "ArticleOne",
         });
         _expectedArticleIndexDictionary.TryAdd("ArticleTwo", new ArticleIndex
         {
             BytesToSeek = 128,
-            ArticleId = 64
+            ArticleId = 64,
+            ArticleName = "ArticleTwo",
         });
         _expectedArticleIndexDictionary.TryAdd("ArticleThree", new ArticleIndex
         {
             BytesToSeek = 131072,
-            ArticleId = 16384
+            ArticleId = 16384,
+            ArticleName = "ArticleThree",
         });
         _expectedArticleIndexDictionary.TryAdd("ArticleFour", new ArticleIndex
         {
             BytesToSeek = 16,
-            ArticleId = 262144
+            ArticleId = 262144,
+            ArticleName = "ArticleFour",
         });
         _expectedArticleIndexDictionary.TryAdd("Article:Five", new ArticleIndex
         {
             BytesToSeek = 32,
-            ArticleId = 8
+            ArticleId = 8,
+            ArticleName = "Article:Five",
         });
         _expectedArticleIndexDictionary.TryAdd("Article:S:i:x", new ArticleIndex
         {
             BytesToSeek = 8192,
-            ArticleId = 1
+            ArticleId = 1,
+            ArticleName = "Article:S:i:x",
         });
     }
 
