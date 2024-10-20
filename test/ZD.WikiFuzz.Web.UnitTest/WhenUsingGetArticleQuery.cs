@@ -45,7 +45,7 @@ public class WhenUsingGetArticleQuery
     {
         ArticleIndex? articleIndex = _getArticleQuery.GetArticleIndex("Article Does Not Exist");
 
-        articleIndex.Should().BeNull();//
+        articleIndex.Should().BeNull();
     }
 
     [Theory]
