@@ -6,14 +6,21 @@ namespace ZD.WikiFuzz.Application.Index.Query;
 
 public class GetArticleQuery : IGetArticleQuery
 {
-    private readonly ConcurrentDictionary<string, ArticleIndex> _articleIndexDictionary;
+    public ConcurrentDictionary<string, ArticleIndex> ArticleIndexDictionary { get; init; }
 
     public GetArticleQuery(IGenerateIndexCommand generateIndexCommand)
     {
-        _articleIndexDictionary = new ConcurrentDictionary<string, ArticleIndex>();
+        ArticleIndexDictionary = new ConcurrentDictionary<string, ArticleIndex>();
         Task.Run(() =>
             generateIndexCommand.Generate(
                 new StreamReader(Path.Combine(Directory.GetCurrentDirectory(), "Data", "Wiki-Index.txt")),
-                _articleIndexDictionary));
+                ArticleIndexDictionary));
+    }
+
+    public ArticleIndex? GetArticleIndex(string? articleName)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(articleName);
+
+        return ArticleIndexDictionary.GetValueOrDefault(articleName);
     }
 }
