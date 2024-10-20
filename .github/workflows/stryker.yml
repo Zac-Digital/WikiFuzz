@@ -24,7 +24,7 @@ jobs:
 
       - name: Run Stryker Mutator
         shell: bash
-        run: dotnet stryker --mutation-level "Complete" --reporter "cleartext" --reporter "html" --concurrency `nproc`
+        run: dotnet stryker --mutation-level "Complete" --break-at 75 --reporter "cleartext" --reporter "html" --concurrency `nproc`
 
       - name: Upload Report
         uses: actions/upload-artifact@v4

@@ -4,9 +4,58 @@
     ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <form type="submit" method="post">
-        <input type="search" asp-for="SearchText" value=""/>
-        <input type="submit" value="Search"/>
-    </form>
-</div>
+<form method="post" id="searchForm">
+    <div class="search-container">
+        <div class="autocomplete-container">
+            <input type="text" id="searchBox" name="SearchText" class="form-control" placeholder="Search..." value="@Model.SearchText">
+            <div id="autocompleteResults" class="autocomplete-results"></div>
+        </div>
+        <button type="submit" class="btn btn-primary submit-button">Submit</button>
+    </div>
+</form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        function updateAutocomplete(searchTerm) {
+            $.ajax({
+                url: '?handler=Index&SearchText=' + encodeURIComponent(searchTerm),
+                type: 'GET',
+                headers: { "X-Requested-With": "XMLHttpRequest" },
+                success: function(data) {
+                    let resultsContainer = $('#autocompleteResults');
+                    resultsContainer.empty();
+                    $.each(data, function(i, item) {
+                        resultsContainer.append(
+                            $('<div></div>')
+                                .addClass('autocomplete-result-item')
+                                .text(item)
+                                .click(function() {
+                                    $('#searchBox').val(item);
+                                    resultsContainer.empty();
+                                })
+                        );
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX Error:", status, error);
+                }
+            });
+        }
+
+        let typingTimer;
+        $('#searchBox').on('input', function() {
+            clearTimeout(typingTimer);
+            const searchTerm = $(this).val();
+            typingTimer = setTimeout(function() {
+                updateAutocomplete(searchTerm);
+            }, 128);
+        });
+
+        $(document).on('click', function(event) {
+            if (!$(event.target).closest('.search-container').length) {
+                $('#autocompleteResults').empty();
+            }
+        });
+    });
+</script>

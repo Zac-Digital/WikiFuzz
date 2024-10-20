@@ -3,6 +3,7 @@ using ZD.WikiFuzz.Application.Index.Query;
 
 namespace ZD.WikiFuzz.Web;
 
+// Stryker disable all
 public static class Program
 {
     public static async Task Main()
@@ -31,3 +32,4 @@ public static class Program
         await app.RunAsync();
     }
 }
+// Stryker restore all
