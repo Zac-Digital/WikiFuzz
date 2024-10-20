@@ -29,7 +29,7 @@ public class GetArticleQuery : IGetArticleQuery
     public IEnumerable<string> GetArticleNames(string? partialArticleName)
     {
         if (string.IsNullOrEmpty(partialArticleName)) return [];
-        return partialArticleName.Length < 2 ? [] :
+        return partialArticleName.Length == 1 ? [] :
             ArticleIndexDictionary.Keys.Where(key => key.StartsWith(partialArticleName)).Take(8);
     }
 }
