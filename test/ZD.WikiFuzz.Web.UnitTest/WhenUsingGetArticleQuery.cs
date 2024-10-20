@@ -50,7 +50,7 @@ public class WhenUsingGetArticleQuery
             new ArticleIndex { BytesToSeek = 33554432, ArticleId = 67108864, ArticleName = "Column B" });
 
         _getArticleQuery = new GetArticleQuery(generateIndexCommand)
-            { ArticleIndexDictionary = articleIndexDictionary };
+        { ArticleIndexDictionary = articleIndexDictionary };
     }
 
     [Theory]
