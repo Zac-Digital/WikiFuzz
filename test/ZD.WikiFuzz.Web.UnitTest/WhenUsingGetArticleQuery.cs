@@ -18,12 +18,12 @@ public class WhenUsingGetArticleQuery
 
         ConcurrentDictionary<string, ArticleIndex> articleIndexDictionary = new ConcurrentDictionary<string, ArticleIndex>();
 
-        articleIndexDictionary.TryAdd("Article A", new ArticleIndex { BytesToSeek = 128, ArticleId = 256});
-        articleIndexDictionary.TryAdd("Article B", new ArticleIndex { BytesToSeek = 512, ArticleId = 1024});
-        articleIndexDictionary.TryAdd("Article C", new ArticleIndex { BytesToSeek = 2048, ArticleId = 4096});
-        articleIndexDictionary.TryAdd("Article D", new ArticleIndex { BytesToSeek = 8192, ArticleId = 16384});
+        articleIndexDictionary.TryAdd("Article A", new ArticleIndex { BytesToSeek = 128, ArticleId = 256 });
+        articleIndexDictionary.TryAdd("Article B", new ArticleIndex { BytesToSeek = 512, ArticleId = 1024 });
+        articleIndexDictionary.TryAdd("Article C", new ArticleIndex { BytesToSeek = 2048, ArticleId = 4096 });
+        articleIndexDictionary.TryAdd("Article D", new ArticleIndex { BytesToSeek = 8192, ArticleId = 16384 });
 
-        _getArticleQuery = new GetArticleQuery(generateIndexCommand) { ArticleIndexDictionary = articleIndexDictionary};
+        _getArticleQuery = new GetArticleQuery(generateIndexCommand) { ArticleIndexDictionary = articleIndexDictionary };
     }
 
     [Theory]
