@@ -24,7 +24,7 @@ jobs:
 
       - name: Test Project
         shell: bash
-        run: dotnet test --configuration Release --no-build --no-restore --verbosity minimal
+        run: dotnet test --configuration Release --logger "trx;LogFileName=test-results.trx" --no-build --no-restore --verbosity minimal
 
       - name: Generate Report
         if: always()
