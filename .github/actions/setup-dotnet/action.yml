@@ -32,4 +32,4 @@ runs:
     - name: Build Project
       if: ${{ inputs.build == 'true' }}
       shell: bash
-      run: dotnet build --no-restore
+      run: dotnet build --configuration Release --no-restore
