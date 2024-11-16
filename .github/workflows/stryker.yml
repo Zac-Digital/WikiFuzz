@@ -13,9 +13,10 @@ jobs:
         with:
           ref: ${{ github.ref }}
 
-      - name: Setup Dotnet
+      - name: Setup DotNet
         uses: ./.github/actions/setup-dotnet
         with:
+          build: 'false'
           dotnet-version: ${{ vars.DOTNET_VERSION }}
 
       - name: Install Stryker Mutator
