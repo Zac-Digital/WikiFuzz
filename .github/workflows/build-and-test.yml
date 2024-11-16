@@ -13,7 +13,7 @@ jobs:
         with:
           ref: ${{ github.ref }}
 
-      - name: Setup Dotnet
+      - name: Setup DotNet
         uses: ./.github/actions/setup-dotnet
         with:
           dotnet-version: ${{ vars.DOTNET_VERSION }}
