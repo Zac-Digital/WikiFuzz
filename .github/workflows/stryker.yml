@@ -24,12 +24,18 @@ jobs:
 
       - name: Run Stryker Mutator
         shell: bash
-        run: dotnet stryker --mutation-level "Complete" --break-at 75 --reporter "cleartext" --reporter "html" --concurrency `nproc`
+        run: dotnet stryker --mutation-level "Complete" --break-at 75 --reporter "cleartext" --reporter "html" --reporter "markdown" -O StrykerOutput --concurrency `nproc`
 
-      - name: Upload Report
+      - name: Generate Markdown Report
+        shell: bash
+        run: |
+          echo '### Stryker Report 🚀' >> $GITHUB_STEP_SUMMARY
+          cat StrykerOutput/reports/mutation-report.md >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload HTML Report
         uses: actions/upload-artifact@v4
         with:
           name: 'Stryker-Report'
-          path: 'StrykerOutput/**/mutation-report.html'
+          path: 'StrykerOutput/reports/mutation-report.html'
           compression-level: '9'
           retention-days: 7
