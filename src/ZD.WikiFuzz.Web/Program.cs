@@ -23,7 +23,7 @@ public static class Program
         }
 
         app.UseHttpsRedirection();
-        app.UseStaticFiles();
+        app.MapStaticAssets();
 
         app.UseRouting();
         app.UseAuthorization();
