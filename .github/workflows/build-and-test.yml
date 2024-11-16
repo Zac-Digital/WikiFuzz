@@ -18,6 +18,17 @@ jobs:
         with:
           dotnet-version: ${{ vars.DOTNET_VERSION }}
 
+      - name: Install Report Tool
+        shell: bash
+        run: dotnet tool install --global LiquidTestReports.Cli --version 2.0.0-beta.2
+
       - name: Test Project
         shell: bash
-        run: dotnet test --no-build --no-restore --verbosity minimal
+        run: dotnet test --configuration Release --logger "trx;LogFileName=test-results.trx" --no-build --no-restore --verbosity minimal
+
+      - name: Generate Report
+        if: always()
+        shell: bash
+        run: |
+          liquid --inputs "File=**/*test-results.trx" --output-file results.md --title "${{ inputs.job_name }}"
+          cat results.md >> $GITHUB_STEP_SUMMARY
