@@ -6,7 +6,7 @@ on:
 jobs:
   dotnet-stryker:
     name: Stryker Mutator
-    runs-on: ubuntu-22.04
+    runs-on: ${{ vars.OPERATING_SYSTEM }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
